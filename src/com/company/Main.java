@@ -18,9 +18,9 @@ import java.util.Scanner;
 
 public class Main {
     static CloseableHttpClient httpClient = HttpClients.createDefault();
-    public static final String ACCESS_KEY = "wNEF6UP09JlKdryDkHWWWAMRImkoct4bjchxKC2PpKwhr9PRLUpvgHvioiFP";
-    public static final String BASE_URL = "https://api.worldtradingdata.com/api/v1/";
-    public static final String ENDPOINT = "forex";
+    public static final String ACCESS_KEY = "";
+    public static final String BASE_URL = "https://financialmodelingprep.com/api/v3/forex";
+    public static final String ENDPOINT = "/EURUSD";
 
     private static Scanner s = new Scanner(System.in);
     private static double moveingAvrege = 1.11;
@@ -33,15 +33,13 @@ public class Main {
         while (true) {
 
 
-          HttpGet get = new HttpGet( "https://financialmodelingprep.com/api/v3/forex/EURUSD");
+          HttpGet get = new HttpGet(BASE_URL + ENDPOINT + ACCESS_KEY);
 
             try {
                 CloseableHttpResponse response = httpClient.execute(get);
                 HttpEntity entity = response.getEntity();
 
                 JSONObject exchangeRates = new JSONObject(EntityUtils.toString(entity));
-
-                System.out.println(exchangeRates.getDouble("ask"));
 
                 Oil.setCurrentPrice(exchangeRates.getDouble("ask"));
 
